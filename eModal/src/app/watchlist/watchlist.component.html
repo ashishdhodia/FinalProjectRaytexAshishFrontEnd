@@ -1,1 +1,90 @@
-<p>watchlist works!</p>
+<div class="container-fluid">
+  <button
+    class="btn btn-success mt-2 mb-2 float-end"
+    data-bs-toggle="modal"
+    data-bs-target="#addContainerModal"
+  >
+    Add Container
+  </button>
+
+  <table class="table table-striped table-hover">
+    <thead class="table-light">
+      <tr>
+        <th scope="col" *ngFor="let itemField of fieldsForTable">
+          {{ itemField }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of recContainerData; let i = index">
+        <td>{{ item.id }}</td>
+        <td>{{ item.B4.B41 }}</td>
+        <td>{{ item.B4.B41 }}</td>
+        <td>{{ item.B4.B41 }}</td>
+        <td>{{ item }}</td>
+        <td>{{ item }}</td>
+        <td>{{ item }}</td>
+        <td>{{ item.R4Loop[0].R44 }}</td>
+        <td>{{ item.R4Loop[1].R44 }}</td>
+        <td>{{ item.B4.B46 }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.Q2.Q213 }}</td>
+        <td>{{ item.Q2.Q21 }}</td>
+        <td>{{ item.Q2.Q29 }}</td>
+        <td>{{ item.B4.B410 }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal fade" id="addContainerModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form
+      [formGroup]="userWatchlistPostForm"
+      (ngSubmit)="userWatchlistPost(userWatchlistPostForm.value)"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Add Container To Watchlist
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="input-group mt-1">
+            <span class="input-group-text">Container id</span>
+            <!-- <p>{{ formPutData.itemModal }}</p> -->
+            <input
+              type="text"
+              class="form-control"
+              formControlName="containerid"
+              required
+            />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              [disabled]="!userWatchlistPostForm.valid"
+            >
+              Add Container
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

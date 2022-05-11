@@ -13,7 +13,8 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
-import { AuthGuard } from './auth.guard'
+import { AuthGuard } from './auth.guard';
+import { UserProfileComponent } from './user-profile/user-profile.component'
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AuthGuard } from './auth.guard'
     HomeComponent,
     LoginComponent,
     NavbarComponent,
-    WatchlistComponent
+    WatchlistComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

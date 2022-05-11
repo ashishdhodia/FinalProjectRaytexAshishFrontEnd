@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   credForm: any
 
   login(form: FormGroup) {
-    console.log(form.value)
+    // console.log(form.value.username)
     this.getJWT.getAuthJWT(form.value).subscribe((data: any) => {
       const token = data.token
       localStorage.setItem("jwt", token)

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { Component, OnInit } from '@angular/core'
+import { JwtHelperService } from '@auth0/angular-jwt'
+import { DataStorageService } from '../data-storage.service'
 
 @Component({
   selector: 'app-navbar',
@@ -8,20 +9,20 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private jwtHelper: JwtHelperService) { }
-  
+  constructor(private jwtHelper: JwtHelperService, private getData: DataStorageService) { }
+
   isUserAuthenticated() {
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem("jwt")
     if (token && !this.jwtHelper.isTokenExpired(token)) {
-      return true;
+      return true
     }
     else {
-      return false;
+      return false
     }
   }
 
   logOut() {
-    localStorage.removeItem("jwt");
+    localStorage.removeItem("jwt")
   }
 
   ngOnInit(): void {
