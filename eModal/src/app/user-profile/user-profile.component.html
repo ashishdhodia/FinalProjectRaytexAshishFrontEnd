@@ -1,1 +1,27 @@
-<p>user-profile works!</p>
+<div class="container mt-5">
+  <div style="color: rgb(140, 0, 255)">
+    <h3><span style="color: black">Username:</span> {{ userid }}</h3>
+  </div>
+
+  <table class="table table-dark table-striped mt-5" style="width: 50%; margin: auto;">
+    <thead>
+      <tr>
+        <th>Container #</th>
+        <th style="text-align: center">Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of containerListForShow; let i = index">
+        <td>{{ item }}</td>
+        <td style="text-align: center">
+          <button
+            class="btn btn-sm btn-danger"
+            (click)="deleteWatchlistEntry(item)"
+          >
+            Remove From Watchlist
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

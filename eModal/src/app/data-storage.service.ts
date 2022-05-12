@@ -18,5 +18,5 @@ export class DataStorageService {
   postDataUserWatchlist(data: any, tokenHeader: any) { return this.ht.post("https://localhost:7152/api/AddedWatchlistData", data, tokenHeader) }
   deleteDataUserWatchlist(id: any, tokenHeader: any) { return this.ht.delete(`https://localhost:7152/api/AddedWatchlistData/${id}`, tokenHeader) }
 
-  getAuthJWT(data: any) { return this.ht.post("https://localhost:7152/api/Users/authenticate", data) }
+  getAuthJWTUsingPostMethod(data: any) { return this.ht.post("https://localhost:7152/api/Users/authenticate", data) }
 }

@@ -2,7 +2,6 @@ import { HttpHeaders } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { JwtHelperService } from '@auth0/angular-jwt'
-import { min } from 'rxjs'
 import { DataStorageService } from '../data-storage.service'
 
 @Component({
@@ -79,7 +78,6 @@ export class WatchlistComponent implements OnInit {
         if (element.userid == this.currentuser) {
           this.containerListForShow.push(element.containerid)
         }
-
       })
     })
 
@@ -96,7 +94,7 @@ export class WatchlistComponent implements OnInit {
     })
 
     this.userWatchlistPostForm = this.fB.group({
-      "containerid": ["", [Validators.required, Validators.minLength(11), Validators.maxLength(11)]]
+      "containerid": ["", [Validators.required, Validators.minLength(10), Validators.maxLength(11)]]
     })
 
   }
