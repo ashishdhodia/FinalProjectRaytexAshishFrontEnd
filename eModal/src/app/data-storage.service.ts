@@ -9,14 +9,14 @@ export class DataStorageService {
 
   constructor(private ht: HttpClient) { }
 
-  getDataContainer(tokenHeader: any) { return this.ht.get("https://localhost:7152/api/edidata", tokenHeader) }
-  // postDataProduct(data: any, tokenHeader: any) { return this.ht.post("https://localhost:7146/api/Products", data, tokenHeader); }
-  // putDataProduct(data: any, id: any, tokenHeader: any) { return this.ht.put(`https://localhost:7146/api/Products/${id}`, data, tokenHeader); }
-  // deleteDataProduct(id: any, tokenHeader: any) { return this.ht.delete(`https://localhost:7146/api/Products/${id}`, tokenHeader) }
+  getDataContainer(tokenHeader: any) { return this.ht.get("http://localhost:8578/api/edidata", tokenHeader) }
 
-  getDataUserWatchlist(tokenHeader: any) { return this.ht.get("https://localhost:7152/api/AddedWatchlistData", tokenHeader) }
-  postDataUserWatchlist(data: any, tokenHeader: any) { return this.ht.post("https://localhost:7152/api/AddedWatchlistData", data, tokenHeader) }
-  deleteDataUserWatchlist(id: any, tokenHeader: any) { return this.ht.delete(`https://localhost:7152/api/AddedWatchlistData/${id}`, tokenHeader) }
+  getTransactionData(tokenHeader: any) { return this.ht.get("http://localhost:8578/api/TransactionData", tokenHeader) }
+  postTransactionData(data: any, tokenHeader: any) { return this.ht.post("http://localhost:8578/api/TransactionData", data, tokenHeader) }
 
-  getAuthJWTUsingPostMethod(data: any) { return this.ht.post("https://localhost:7152/api/Users/authenticate", data) }
+  getDataUserWatchlist(tokenHeader: any) { return this.ht.get("http://localhost:8578/api/AddedWatchlistData", tokenHeader) }
+  postDataUserWatchlist(data: any, tokenHeader: any) { return this.ht.post("http://localhost:8578/api/AddedWatchlistData", data, tokenHeader) }
+  deleteDataUserWatchlist(id: any, tokenHeader: any) { return this.ht.delete(`http://localhost:8578/api/AddedWatchlistData/${id}`, tokenHeader) }
+
+  getAuthJWTUsingPostMethod(data: any) { return this.ht.post("http://localhost:8578/api/Users/authenticate", data) }
 }

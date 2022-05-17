@@ -44,7 +44,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     const tok = localStorage.getItem("jwt")
     if (tok && !this.jwtHelper.isTokenExpired(tok)) {
-      this.currentuser = this.jwtHelper.decodeToken(tok).name
+      this.currentuser = this.jwtHelper.decodeToken(tok).unique_name
       this.userid = this.currentuser
     }
 

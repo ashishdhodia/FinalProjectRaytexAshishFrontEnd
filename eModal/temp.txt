@@ -1,0 +1,83 @@
+using Microsoft.AspNetCore.Mvc;
+using EDIdataAPI.Model;
+using System.Data.SqlClient;
+using System.Data;
+using Microsoft.AspNetCore.Authorization;
+using System.IO;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace EDIdataAPI.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AddedWatchlistDataController : ControllerBase
+    {
+        string connectionString = "Server=localhost; Database=eModal; Integrated Security=true; Trusted_Connection=True; MultipleActiveResultSets=True;";
+        string queryString = "SELECT * FROM addedWatchlistData";
+
+        SqlConnection connection = new SqlConnection(@"Server=localhost; Database=eModal; Integrated Security=true; Trusted_Connection=True; MultipleActiveResultSets=True;");
+
+
+        private SqlConnection _con;
+        private SqlDataAdapter dataAdapter;
+        private DataTable dataTable = new DataTable();
+        public List<IDictionary<string, string>> lstkeyValuePairs;
+
+        public AddedWatchlistDataController()
+        {
+            _con = new SqlConnection("Server=.; Database=eModal; Integrated Security=true; Trusted_Connection=True; MultipleActiveResultSets=True;");
+            _con.Open();
+        }
+
+
+        // GET: api/<AddedWatchlistDataController>
+        [HttpGet]
+        public List<IDictionary<string, string>> Get()
+        {
+            SqlCommand cmd = new SqlCommand(queryString, connection);
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    // here keyValuePairs is an individual fee
+                    IDictionary<string, string> keyValuePairs = new Dictionary<string, string>();
+                    keyValuePairs.Add("id", Convert.ToString(reader[0]));
+                    keyValuePairs.Add("userid", Convert.ToString(reader[1]));
+                    keyValuePairs.Add("containerid", Convert.ToString(reader[1]));
+                    lstkeyValuePairs.Add(keyValuePairs);
+                }
+                System.IO.File.WriteAllText(@"D:\intership\ex\ashish.txt", "Sucess");
+                return lstkeyValuePairs;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                System.IO.File.WriteAllText(@"D:\intership\ex\ashish.txt", ex.Message);
+            }
+            return null; 
+        }
+
+
+
+        [HttpPost]
+        public void Post([Bind("Id,Userid,Containerid")] AddedWatchlistData addedWatchlistData)
+        {
+            if (ModelState.IsValid)
+            {
+                dataAdapter = new SqlDataAdapter($"INSERT INTO addedWatchlistData(userid,containerid) VALUES('{addedWatchlistData.Userid}','{addedWatchlistData.Containerid}')", _con);
+                dataAdapter.Fill(dataTable);
+            }
+        }
+
+        // DELETE api/<AddedWatchlistDataController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            dataAdapter = new SqlDataAdapter($"DELETE FROM addedWatchlistData WHERE id={id}", _con);
+            dataAdapter.Fill(dataTable);
+        }
+    }
+}

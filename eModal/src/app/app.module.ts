@@ -14,7 +14,8 @@ import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { AuthGuard } from './auth.guard';
-import { UserProfileComponent } from './user-profile/user-profile.component'
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { SignUpComponent } from './sign-up/sign-up.component'
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component'
     LoginComponent,
     NavbarComponent,
     WatchlistComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

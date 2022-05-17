@@ -18,23 +18,64 @@
     <tbody>
       <tr *ngFor="let item of recContainerData; let i = index">
         <td>{{ item.id }}</td>
-        <td>{{ item.B4.B41 }}</td>
-        <td>{{ item.SG[0].SG1 }}</td>
+        <td>
+          <span *ngIf="item.B4.B41 == 'IP'"> IMPORT </span>
+          <span *ngIf="item.B4.B41 == 'XP'"> EXPORT </span>
+        </td>
+        <td>
+          <span *ngIf="sgExists(item); else elseBlock">
+            {{ item.SG[0].SG1 }}
+          </span>
+        </td>
         <td>N/A</td>
-        <td>NA</td>
-        <td>NA</td>
-        <td>NA</td>
+        <td>N/A</td>
+        <td>N/A</td>
+        <td>N/A</td>
         <td>{{ item.R4Loop[0].R44 }}</td>
         <td>{{ item.R4Loop[1].R44 }}</td>
-        <td>{{ item.B4.B46 }}</td>
-        <td>{{ item.price }}</td>
-        <td>{{ item.Q2.Q213 }}</td>
-        <td>{{ item.Q2.Q21 }}</td>
-        <td>{{ item.Q2.Q29 }}</td>
+        <td>
+          <span *ngIf="item.B4.B46 != ''; else elseBlock">
+            {{ item.Q2.Q29 }}
+          </span>
+        </td>
+        <td>
+          <span *ngIf="item.N9Loop[1].N91 == 'SCA'; else elseBlock">
+            {{ item.N9Loop[1].N92 }}
+          </span>
+        </td>
+        <td>
+          <span *ngIf="item.Q2.Q213 != ''; else elseBlock">
+            {{ item.Q2.Q29 }}
+          </span>
+        </td>
+        <td>
+          <span *ngIf="item.Q2.Q21 != ''; else elseBlock">
+            {{ item.Q2.Q29 }}
+          </span>
+        </td>
+        <td>
+          <span *ngIf="item.Q2.Q29 != ''; else elseBlock">
+            {{ item.Q2.Q29 }}
+          </span>
+          <ng-template #elseBlock>N/A</ng-template>
+        </td>
         <td>{{ item.B4.B410 }}</td>
         <td>{{ item.fees }}</td>
-        <td>NA</td>
-        <td>NA</td>
+        <!-- <td>NA</td>
+        <td>NA</td> -->
+        <td>
+          <button
+            *ngIf="feesExists(item); else elseBlockFees"
+            type="button"
+            class="btn btn-danger btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#paymentModal"
+            (click)="payFees(item)"
+          >
+            Pay
+          </button>
+          <ng-template #elseBlockFees>N/A</ng-template>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -84,6 +125,136 @@
               [disabled]="!userWatchlistPostForm.valid"
             >
               Add Container
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form
+      [formGroup]="userPaymentForm"
+      (ngSubmit)="userPaymentPost(userPaymentForm.value)"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Add Container To Watchlist
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="input-group mt-1">
+            <span class="input-group-text">Container Id</span>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="containerid"
+              readonly
+            />
+          </div>
+
+          <div class="input-group mt-2">
+            <span class="input-group-text">Container Fees</span>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="containerFees"
+              readonly
+            />
+          </div>
+
+          <div class="input-group mt-2">
+            <span class="input-group-text">User Id</span>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="userid"
+              readonly
+            />
+          </div>
+
+          <h4 class="mb-3 mt-4">Payment</h4>
+          <div class="input-group input-group mb-3">
+            <span class="input-group-text">Payment Type</span>
+            <select
+              class="form-select form-select-sm"
+              aria-label=".form-select-sm example"
+              (change)="updatePaymentType($event)"
+            >
+              <option selected value="Credit">Credit</option>
+              <option value="Debit">Debit</option>
+            </select>
+          </div>
+
+          <div class="row gy-3">
+            <div class="col-md-6">
+              <label for="cc-name" class="form-label">Name on card</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="cardOwnerName"
+                required
+              />
+            </div>
+
+            <div class="col-md-6">
+              <label for="cc-number" class="form-label"
+                >{{ userPaymentForm.value.cardType }} card number</label
+              >
+              <input
+              type="text"
+              class="form-control"
+              formControlName="cardNumber"
+              required
+              />
+            </div>
+
+            <div class="col-md-6">
+              <label for="cc-expiration" class="form-label">Expiration</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="cardExp"
+                required
+              />
+            </div>
+
+            <div class="col-md-6">
+              <label for="cc-cvv" class="form-label">CVV</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="cardCVV"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              [disabled]="!userPaymentForm.valid"
+            >
+              Pay Fees
             </button>
           </div>
         </div>
