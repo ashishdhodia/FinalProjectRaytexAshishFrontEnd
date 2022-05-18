@@ -1,1 +1,25 @@
-<p>sign-up works!</p>
+<body>
+  <main class="form-signin">
+    <form [formGroup]="signUpForm" (ngSubmit)="signUpPost(signUpForm.value)">
+      <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
+      <label>Email address</label>
+      <input type="email" class="form-control" formControlName="emailId" />
+      <label>User id</label>
+      <input type="text" class="form-control" formControlName="userId" />
+      <label>Password</label>
+      <input type="password" class="form-control" formControlName="userPass" />
+      <label>Address</label>
+      <input type="text" class="form-control" formControlName="userAddress" />
+      <button
+        class="w-100 btn btn-lg btn-dark mt-3"
+        [disabled]="!signUpForm.valid"
+        type="submit"
+      >
+        Sign Up
+      </button>
+    </form>
+    <div *ngIf="validSignUp" class="alert alert-success mt-2 text-center">
+      User created successfully.
+    </div>
+  </main>
+</body>

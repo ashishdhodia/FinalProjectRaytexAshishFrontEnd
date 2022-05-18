@@ -1,6 +1,7 @@
 import { HttpHeaders } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
 import { JwtHelperService } from '@auth0/angular-jwt'
 import { DataStorageService } from '../data-storage.service'
 
@@ -11,7 +12,7 @@ import { DataStorageService } from '../data-storage.service'
 })
 export class WatchlistComponent implements OnInit {
 
-  constructor(private jwtHelper: JwtHelperService, private getData: DataStorageService, private fB: FormBuilder) { }
+  constructor(private jwtHelper: JwtHelperService, private getData: DataStorageService, private fB: FormBuilder, private router: Router) { }
 
   recContainerData: any
   recUserWatchlistData: any
@@ -55,15 +56,15 @@ export class WatchlistComponent implements OnInit {
 
   userWatchlistPost(data: any) {
     this.userWatchlistPostForm.reset()
-    if (this.containerListForShow.includes(data.containerid)) {
+    if (this.containerListForShow.includes(data.containerId)) {
       alert("Container is available in watchlist already")
       return
-    } else if (!this.allContainerIdList.includes(data.containerid)) {
+    } else if (!this.allContainerIdList.includes(data.containerId)) {
       alert("Container is not available in database")
       return
     }
-    let userid = this.currentuser
-    data = { ...data, userid }
+    let userId = this.currentuser
+    data = { ...data, userId }
 
     this.getData.postDataUserWatchlist(data, this.httpOptions).subscribe((data) => {
     })
@@ -82,16 +83,20 @@ export class WatchlistComponent implements OnInit {
     data.containerFees = parseInt(data.containerFees)
     data.cardNumber = data.cardNumber.slice(12)
     data.cardNumber = parseInt(data.cardNumber)
+    data["txnTime"] = ""
     this.getData.postTransactionData(data, this.httpOptions).subscribe((data) => {
     })
-    location.reload()
+    setTimeout(() => {
+      this.router.navigate(['transaction-success'])
+    }, 1500)
+    // location.reload()
   }
 
   payFees(item: any) {
     this.userPaymentForm.patchValue({
-      "containerid": item.id,
+      "containerId": item.id,
       "containerFees": item.fees,
-      "userid": this.currentuser
+      "userId": this.currentuser
     })
   }
 
@@ -124,10 +129,9 @@ export class WatchlistComponent implements OnInit {
 
     this.getData.getDataUserWatchlist(this.httpOptions).subscribe((data) => {
       this.recUserWatchlistData = data
-
       this.recUserWatchlistData.forEach((element: any) => {
-        if (element.userid == this.currentuser) {
-          this.containerListForShow.push(element.containerid)
+        if (element.userId == this.currentuser) {
+          this.containerListForShow.push(element.containerId)
         }
       })
     })
@@ -135,7 +139,6 @@ export class WatchlistComponent implements OnInit {
     this.getData.getDataContainer(this.httpOptions).subscribe((data) => {
       this.recContainerData = data
       this.recContainerData = this.recContainerData.Data
-
       for (let i = 0; i < this.recContainerData.length; i++) {
         this.allContainerIdList.push(this.recContainerData[i].id)
         if (!this.containerListForShow.includes(this.recContainerData[i].id)) {
@@ -147,11 +150,9 @@ export class WatchlistComponent implements OnInit {
         this.transactionData = data
         this.recContainerData.forEach((element: any) => {
           this.transactionData.forEach((elementTxn: any) => {
-            if (element.id == elementTxn.containerid) {
-              element.fees = `Fees paid by ${elementTxn.userid}`
+            if (element.id == elementTxn.containerId) {
+              element.fees = `Fees paid by ${elementTxn.userId}`
               element.feesPaid = 'true'
-              console.log(element)
-
             }
           })
         })
@@ -161,18 +162,19 @@ export class WatchlistComponent implements OnInit {
 
 
     this.userWatchlistPostForm = this.fB.group({
-      "containerid": ["", [Validators.required, Validators.minLength(10), Validators.maxLength(11)]]
+      "containerId": ["", [Validators.required, Validators.minLength(10), Validators.maxLength(11)]]
     })
 
     this.userPaymentForm = this.fB.group({
-      "containerid": [""],
+      "containerId": [""],
       "containerFees": [""],
-      "userid": [""],
+      "userId": [""],
       "cardOwnerName": ["", [Validators.required]],
       "cardType": ["Credit", [Validators.required]],
       "cardNumber": ["", [Validators.required, Validators.minLength(16), Validators.maxLength(16)]],
       "cardExp": ["", [Validators.required]],
-      "cardCVV": ["", [Validators.required, Validators.minLength(3), Validators.maxLength(3)]]
+      "cardCVV": ["", [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+      "txnTime": ["Time", [Validators.required]]
     })
 
   }

@@ -11,6 +11,8 @@ export class DataStorageService {
 
   getDataContainer(tokenHeader: any) { return this.ht.get("http://localhost:8578/api/edidata", tokenHeader) }
 
+  postSignUp(data: any) { return this.ht.post("http://localhost:8578/api/UserData", data) }
+
   getTransactionData(tokenHeader: any) { return this.ht.get("http://localhost:8578/api/TransactionData", tokenHeader) }
   postTransactionData(data: any, tokenHeader: any) { return this.ht.post("http://localhost:8578/api/TransactionData", data, tokenHeader) }
 

@@ -15,7 +15,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { AuthGuard } from './auth.guard';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { SignUpComponent } from './sign-up/sign-up.component'
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { TransactionSuccessComponent } from './transaction-success/transaction-success.component'
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SignUpComponent } from './sign-up/sign-up.component'
     NavbarComponent,
     WatchlistComponent,
     UserProfileComponent,
-    SignUpComponent
+    SignUpComponent,
+    TransactionSuccessComponent
   ],
   imports: [
     BrowserModule,

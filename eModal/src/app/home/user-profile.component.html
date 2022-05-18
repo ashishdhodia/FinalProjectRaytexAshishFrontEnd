@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <div style="color: rgb(140, 0, 255)">
-    <h2><span style="color: black">Username:</span> {{ userId }}</h2>
+    <h2><span style="color: black">Username:</span> {{ userid }}</h2>
   </div>
   <span *ngIf="listExists()">
     <div style="color: rgb(0, 4, 255)">
@@ -42,9 +42,9 @@
     >
       <thead>
         <tr>
-          <th>Container Id</th>
+          <th>Container id</th>
           <th>Container Fees</th>
-          <th>User Id</th>
+          <th>User id</th>
           <th>Card Owner Name</th>
           <th>Card Type</th>
           <th>card Number (Last 4 Digit)</th>
@@ -53,9 +53,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of recTxnData; let i = index">
-          <td>{{ item.containerId }}</td>
+          <td>{{ item.containerid }}</td>
           <td>{{ item.containerFees }}</td>
-          <td>{{ item.userId }}</td>
+          <td>{{ item.userid }}</td>
           <td>{{ item.cardOwnerName }}</td>
           <td>{{ item.cardType }}</td>
           <td>{{ item.cardNumber }}</td>

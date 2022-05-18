@@ -14,8 +14,9 @@ export class UserProfileComponent implements OnInit {
   constructor(private jwtHelper: JwtHelperService, private getData: DataStorageService, private fB: FormBuilder) { }
 
   private currentuser: any
-  userid: any
+  userId: any
   recUserWatchlistData: any
+  recTxnData: any
   containerListForShow: any = []
 
   token = localStorage.getItem("jwt");
@@ -27,10 +28,35 @@ export class UserProfileComponent implements OnInit {
     })
   }
 
+  objectLength(obj: any) {
+    var result = 0
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+        result++
+      }
+    }
+    return result
+  }
+
+  listExists() {
+    if (this.objectLength(this.containerListForShow) > 0) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  txnExists() {
+    if (this.objectLength(this.recTxnData) > 0) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   deleteWatchlistEntry(id: any) {
-    console.log(id)
     this.recUserWatchlistData.forEach((element: any) => {
-      if (element.containerid == id) {
+      if (element.containerId == id) {
         let index = this.containerListForShow.indexOf(id)
         this.getData.deleteDataUserWatchlist(element.id, this.httpOptions).subscribe((data) => {
           this.containerListForShow.splice(index, 1)
@@ -45,17 +71,32 @@ export class UserProfileComponent implements OnInit {
     const tok = localStorage.getItem("jwt")
     if (tok && !this.jwtHelper.isTokenExpired(tok)) {
       this.currentuser = this.jwtHelper.decodeToken(tok).unique_name
-      this.userid = this.currentuser
+      this.userId = this.currentuser
     }
 
     this.getData.getDataUserWatchlist(this.httpOptions).subscribe((data) => {
       this.recUserWatchlistData = data
       this.recUserWatchlistData.forEach((element: any) => {
-        if (element.userid == this.currentuser) {
-          this.containerListForShow.push(element.containerid)
+        if (element.userId == this.currentuser) {
+          this.containerListForShow.push(element.containerId)
         }
       })
     })
-  }
 
+    this.getData.getTransactionData(this.httpOptions).subscribe((data) => {
+      this.recTxnData = data
+      this.recTxnData.forEach((element: any) => {
+        if (element.userId != this.currentuser) {
+          delete element[0]
+        }
+      })
+
+      for (let i = 0; i < this.recTxnData.length; i++) {
+        if (this.recTxnData[i].userId != this.currentuser) {
+          this.recTxnData.splice(i, 1)
+          i--
+        }
+      }
+    })
+  }
 }
