@@ -28,7 +28,7 @@ export class SignUpComponent implements OnInit {
     this.signUpForm = this.fB.group({
       "emailId": ["", [Validators.required, Validators.email]],
       "userId": ["", [Validators.required, Validators.minLength(6)]],
-      "userPass": ["", [Validators.required, Validators.minLength(6)]],
+      "userPass": ["", [Validators.required]],
       "userAddress": ["", [Validators.required]]
     })
   }

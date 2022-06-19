@@ -13,7 +13,7 @@ export class TransactionSuccessComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       this.router.navigate(['watchlist'])
-    }, 2000)
+    }, 3000)
   }
 
 }

@@ -24,7 +24,7 @@ export class WatchlistComponent implements OnInit {
   allContainerIdList: any = []
 
   fieldsForTable = [
-    "Container #",
+    "Container#",
     "Trade Type",
     "Status",
     "Holds",
@@ -38,11 +38,11 @@ export class WatchlistComponent implements OnInit {
     "Vessel Name",
     "Vessel Code",
     "Voyage",
-    "Size Type",
     "Fees",
     // "LFD/GTD",
     // "Tags",
-    "Pay"
+    "Pay",
+    "Size Type"
   ]
 
   token = localStorage.getItem("jwt");
@@ -118,6 +118,18 @@ export class WatchlistComponent implements OnInit {
       return false
     }
     return false
+  }
+
+  sortBy(event: any) {
+    if (event.target.value == "Id (A-Z)") {
+      this.recContainerData.sort((a: any, b: any) => (a.id > b.id) ? 1 : -1)
+    } else if (event.target.value == "Id (Z-A)") {
+      this.recContainerData.sort((a: any, b: any) => (a.id < b.id) ? 1 : -1)
+    } else if (event.target.value == "Fees (High-Low)") {
+      this.recContainerData.sort((a: any, b: any) => (a.fees < b.fees) ? 1 : -1)
+    } else if (event.target.value == "Fees (Low-High)") {
+      this.recContainerData.sort((a: any, b: any) => (a.fees > b.fees) ? 1 : -1)
+    }
   }
 
   ngOnInit(): void {

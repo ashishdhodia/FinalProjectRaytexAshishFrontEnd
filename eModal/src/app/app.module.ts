@@ -16,7 +16,8 @@ import { WatchlistComponent } from './watchlist/watchlist.component';
 import { AuthGuard } from './auth.guard';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { TransactionSuccessComponent } from './transaction-success/transaction-success.component'
+import { TransactionSuccessComponent } from './transaction-success/transaction-success.component';
+import { ContainerBookingComponent } from './container-booking/container-booking.component'
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TransactionSuccessComponent } from './transaction-success/transaction-s
     WatchlistComponent,
     UserProfileComponent,
     SignUpComponent,
-    TransactionSuccessComponent
+    TransactionSuccessComponent,
+    ContainerBookingComponent
   ],
   imports: [
     BrowserModule,

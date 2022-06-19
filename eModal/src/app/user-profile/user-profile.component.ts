@@ -76,6 +76,7 @@ export class UserProfileComponent implements OnInit {
 
     this.getData.getDataUserWatchlist(this.httpOptions).subscribe((data) => {
       this.recUserWatchlistData = data
+      console.log(this.recUserWatchlistData); 
       this.recUserWatchlistData.forEach((element: any) => {
         if (element.userId == this.currentuser) {
           this.containerListForShow.push(element.containerId)

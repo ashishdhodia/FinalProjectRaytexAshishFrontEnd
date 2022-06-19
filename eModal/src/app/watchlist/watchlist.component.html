@@ -1,13 +1,33 @@
 <div class="container-fluid">
-  <button
-    class="btn btn-success mt-2 mb-2 float-end"
-    data-bs-toggle="modal"
-    data-bs-target="#addContainerModal"
-  >
-    Add Container
-  </button>
+  <div class="container">
+    <div class="row align-items-start">
+      <div class="col">
+        <select
+          class="form-select mt-2 mb-2 float-start bg-primary text-white"
+          style="width: 128px"
+          (change)="sortBy($event)"
+        >
+          <option selected value="Credit" disabled>Sort By</option>
+          <option value="Id (A-Z)">Id (A-Z)</option>
+          <option value="Id (Z-A)">Id (Z-A)</option>
+          <option value="Fees (High-Low)">Fees (High-Low)</option>
+          <option value="Fees (Low-High)">Fees (Low-High)</option>
+        </select>
+      </div>
 
-  <table class="table table-striped table-hover">
+      <div class="col">
+        <button
+          class="btn btn-success mt-2 mb-2 float-end addContainercy"
+          data-bs-toggle="modal"
+          data-bs-target="#addContainerModal"
+        >
+          Add Container
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-striped table-hover table-bordered">
     <thead class="table-light">
       <tr>
         <th scope="col" *ngFor="let itemField of fieldsForTable">
@@ -45,12 +65,12 @@
         </td>
         <td>
           <span *ngIf="item.Q2.Q213 != ''; else elseBlock">
-            {{ item.Q2.Q29 }}
+            {{ item.Q2.Q213 }}
           </span>
         </td>
         <td>
           <span *ngIf="item.Q2.Q21 != ''; else elseBlock">
-            {{ item.Q2.Q29 }}
+            {{ item.Q2.Q21 }}
           </span>
         </td>
         <td>
@@ -59,7 +79,6 @@
           </span>
           <ng-template #elseBlock>N/A</ng-template>
         </td>
-        <td>{{ item.B4.B410 }}</td>
         <td>{{ item.fees }}</td>
         <!-- <td>NA</td>
         <td>NA</td> -->
@@ -67,7 +86,7 @@
           <button
             *ngIf="feesExists(item); else elseBlockFees"
             type="button"
-            class="btn btn-danger btn-sm"
+            class="btn btn-danger btn-sm {{ item.id + 'pay' }}"
             data-bs-toggle="modal"
             data-bs-target="#paymentModal"
             (click)="payFees(item)"
@@ -76,6 +95,7 @@
           </button>
           <ng-template #elseBlockFees>N/A</ng-template>
         </td>
+        <td>{{ item.B4.B410 }}</td>
       </tr>
     </tbody>
   </table>
@@ -105,7 +125,7 @@
             <!-- <p>{{ formPutData.itemModal }}</p> -->
             <input
               type="text"
-              class="form-control"
+              class="form-control addContainerIPcy"
               formControlName="containerId"
               required
             />
@@ -120,7 +140,7 @@
             </button>
             <button
               type="submit"
-              class="btn btn-primary"
+              class="btn btn-primary addContainerBTNcy"
               data-bs-dismiss="modal"
               [disabled]="!userWatchlistPostForm.valid"
             >
@@ -212,17 +232,23 @@
                 >{{ userPaymentForm.value.cardType }} card number</label
               >
               <input
-              type="text"
-              class="form-control"
-              formControlName="cardNumber"
-              required
+                type="text"
+                class="form-control"
+                formControlName="cardNumber"
+                required
               />
             </div>
 
             <div class="col-md-6">
               <label for="cc-expiration" class="form-label">Expiration</label>
-              <input
+              <!-- <input
                 type="text"
+                class="form-control"
+                formControlName="cardExp"
+                required
+              /> -->
+              <input
+                type="month"
                 class="form-control"
                 formControlName="cardExp"
                 required

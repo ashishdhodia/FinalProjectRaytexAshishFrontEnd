@@ -9,16 +9,16 @@ export class DataStorageService {
 
   constructor(private ht: HttpClient) { }
 
-  getDataContainer(tokenHeader: any) { return this.ht.get("http://localhost:8578/api/edidata", tokenHeader) }
+  getDataContainer(tokenHeader: any) { return this.ht.get("http://efcyit-ltr909:8578/api/edidata", tokenHeader) }
 
-  postSignUp(data: any) { return this.ht.post("http://localhost:8578/api/UserData", data) }
+  postSignUp(data: any) { return this.ht.post("http://efcyit-ltr909:8578/api/UserData", data) }
 
-  getTransactionData(tokenHeader: any) { return this.ht.get("http://localhost:8578/api/TransactionData", tokenHeader) }
-  postTransactionData(data: any, tokenHeader: any) { return this.ht.post("http://localhost:8578/api/TransactionData", data, tokenHeader) }
+  getTransactionData(tokenHeader: any) { return this.ht.get("http://efcyit-ltr909:8578/api/TransactionData", tokenHeader) }
+  postTransactionData(data: any, tokenHeader: any) { return this.ht.post("http://efcyit-ltr909:8578/api/TransactionData", data, tokenHeader) }
 
-  getDataUserWatchlist(tokenHeader: any) { return this.ht.get("http://localhost:8578/api/AddedWatchlistData", tokenHeader) }
-  postDataUserWatchlist(data: any, tokenHeader: any) { return this.ht.post("http://localhost:8578/api/AddedWatchlistData", data, tokenHeader) }
-  deleteDataUserWatchlist(id: any, tokenHeader: any) { return this.ht.delete(`http://localhost:8578/api/AddedWatchlistData/${id}`, tokenHeader) }
+  getDataUserWatchlist(tokenHeader: any) { return this.ht.get("http://efcyit-ltr909:8578/api/AddedWatchlistData", tokenHeader) }
+  postDataUserWatchlist(data: any, tokenHeader: any) { return this.ht.post("http://efcyit-ltr909:8578/api/AddedWatchlistData", data, tokenHeader) }
+  deleteDataUserWatchlist(id: any, tokenHeader: any) { return this.ht.delete(`http://efcyit-ltr909:8578/api/AddedWatchlistData/${id}`, tokenHeader) }
 
-  getAuthJWTUsingPostMethod(data: any) { return this.ht.post("http://localhost:8578/api/Users/authenticate", data) }
+  getAuthJWTUsingPostMethod(data: any) { return this.ht.post("http://efcyit-ltr909:8578/api/Users/authenticate", data) }
 }
